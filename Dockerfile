@@ -1,3 +1,18 @@
+# Use the official Postgres image from Docker Hub
+FROM postgres:15.8
+ 
+# Set environment variables for PostgreSQL setup
+ENV POSTGRES_USER=verifier_mgmt_user
+ENV POSTGRES_PASSWORD=secret
+ENV POSTGRES_DB=verifier_db
+ 
+# Healthcheck to make sure the DB is ready
+HEALTHCHECK --interval=5s --timeout=5s --retries=5 \
+  CMD pg_isready -U $POSTGRES_USER -d $POSTGRES_DB
+ 
+# Expose the default PostgreSQL port
+EXPOSE 5432
+
 # SPDX-FileCopyrightText: 2025 Swiss Confederation
 
 #
